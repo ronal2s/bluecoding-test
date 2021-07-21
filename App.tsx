@@ -1,21 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { GlobalContext, GlobalContextProps } from "./contexts/globalContext";
+import NavigationContent from "./screens/navigation/navigation";
 
 export default function App() {
+  const setContent = (object: any) => {
+    setContext({ ...context, content: { ...object } });
+  };
+  const [context, setContext] = useState<GlobalContextProps>({
+    content: {
+      isLogged: false,
+      user: null,
+    },
+    setContent,
+  });
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <GlobalContext.Provider value={{ ...context, setContent }}>
+      <NavigationContent />
+    </GlobalContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
